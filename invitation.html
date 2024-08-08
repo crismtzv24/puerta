@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación a Coraline</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('coraline.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ecf0f1;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .button {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ecf0f1; /* Letras blancas en el botón */
+            background-color: rgba(41, 128, 185, 0.8); /* Azul opaco más oscuro */
+            border: none; /* Sin borde */
+            border-radius: 5px;
+            padding: 20px 40px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+            display: inline-block;
+            animation: popIn 1s ease-out;
+        }
+        .button:hover {
+            background-color: rgba(34, 98, 140, 0.8); /* Azul opaco aún más oscuro */
+        }
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <button class="button" onclick="window.location.href='confirmation.html'">Entra A La Puerta</button>
+</body>
+</html>

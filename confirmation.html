@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación a Cita</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300;400;700&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #000000, #003366);
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            width: 80%;
+            max-width: 1000px;
+            text-align: center;
+            padding: 5px;
+            box-sizing: border-box;
+            z-index: 1; /* Asegura que el contenedor esté por encima del confeti */
+        }
+
+        .image {
+            position: absolute;
+            top: 5px;
+            left: 800px; /* Ajusta este valor para mover la imagen más a la izquierda */
+            width: 500px;
+            height: auto;
+            z-index: 2; /* Asegura que la imagen esté por encima del confeti */
+        }
+
+        .invitation {
+            position: relative;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 3; /* Asegura que la invitación esté por encima de la imagen y del confeti */
+            overflow: hidden;
+        }
+
+        .invitation h1, .invitation h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .invitation h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-family: 'Lobster', cursive;
+        }
+
+        .invitation h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .invitation p {
+            font-size: 20px;
+            margin-top: -50px;
+        }
+
+        .ticket-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .ticket-section img {
+            width: 400px;
+            height: auto;
+            margin: 0 10px;
+        }
+
+        .cta {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Confetti Styles */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: blue;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 0; /* Asegura que el confeti esté detrás de todo */
+            transform: rotate(45deg);
+        }
+
+        .confetti:nth-child(odd) {
+            background: purple;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Styles for the play button */
+        .play-button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2; /* Asegura que el botón esté por encima de todo */
+        }
+
+        .play-button {
+            background: #ffcc00;
+            border: none;
+            padding: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #000;
+        }
+
+        .play-button:hover {
+            background: #e6b800;
+        }
+    </style>
+</head>
+<body>
+    <!-- Play Button -->
+    <div class="play-button-container" id="playButtonContainer">
+        <button class="play-button" id="playButton">Llegaste</button>
+    </div>
+
+    <div class="container" id="contentContainer" style="display: none;">
+        <img src="coraline.png" alt="Coraline" class="image" id="coralineImage">
+
+        <div class="invitation" id="invitation">
+            <h1>Invitación Especial</h1>
+            <h2>¡Para Que Vayamos Juntos A Ver Coraline!</h2>
+
+            <div class="ticket-section" id="ticketSection">
+                <img src="ticket.jpg" alt="Boleto" id="ticketImage">
+            </div>
+
+            <div class="cta" id="ctaText">¡No faltes!</div>
+        </div>
+    </div>
+
+    <!-- Elemento de Audio -->
+    <audio id="backgroundMusic" src="audio.mp3" preload="auto" loop></audio>
+
+    <script>
+        function createConfetti() {
+            const numberOfConfetti = 100; // Número total de piezas de confeti
+            const confettiContainer = document.body;
+
+            for (let i = 0; i < numberOfConfetti; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.width = `${Math.random() * 15 + 5}px`;
+                confetti.style.height = `${Math.random() * 15 + 10}px`;
+                confetti.style.left = `${Math.random() * 100}vw`; // Genera confeti en todo el ancho del viewport
+                confetti.style.top = `${Math.random() * -100}px`; // Posiciona el confeti fuera de la pantalla en la parte superior
+                confetti.style.animation = `fall ${Math.random() * 5 + 5}s linear infinite`;
+
+                confettiContainer.appendChild(confetti);
+
+                // Remove the confetti after animation to keep the DOM clean
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
+                });
+            }
+        }
+
+        function animatePage() {
+            const invitation = document.getElementById('invitation');
+            const ticketSection = document.getElementById('ticketSection');
+            const ctaText = document.getElementById('ctaText');
+            const coralineImage = document.getElementById('coralineImage');
+
+            invitation.style.opacity = 1;
+            invitation.style.transform = 'translateY(0)';
+
+            ticketSection.style.opacity = 1;
+
+            ctaText.style.opacity = 1;
+
+            coralineImage.style.transform = 'translateX(0)';
+        }
+
+        document.getElementById('playButton').onclick = function() {
+            // Oculta el botón de reproducción y muestra el contenido
+            document.getElementById('playButtonContainer').style.display = 'none';
+            document.getElementById('contentContainer').style.display = 'block';
+
+            // Reproduce el audio
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            backgroundMusic.play().catch(error => {
+                console.log('Error al intentar reproducir el audio:', error);
+            });
+
+            // Inicia la animación del confeti y el contenido
+            setTimeout(animatePage, 500);
+            createConfetti();
+        }
+    </script>
+</body>
+</html>
